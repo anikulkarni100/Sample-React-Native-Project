@@ -1,0 +1,539 @@
+// 20210212102155
+// https://api.fiksio.com/swagger
+
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a API doc for Fiks.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "Swagger Fiks",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "developers@fiks.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "fiks.swagger.io",
+  "basePath": "/v2",
+  "tags": [
+    {
+      "name": "device",
+      "description": "Everything about your Devices",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about user",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Register new user to Fiks",
+        "description": "",
+        "operationId": "registerUser",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Details of user to be registered",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Login",
+        "description": "",
+        "operationId": "login",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "username",
+            "type": "string",
+            "description": "registered email id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "password",
+            "type": "string",
+            "description": "password",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns access token created"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/oauth/v2/vendors": {
+      "get": {
+        "tags": [
+          "vendor"
+        ],
+        "summary": "Get vendor list",
+        "description": "",
+        "operationId": "getAllVendors",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Vendor"
+            }
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/oauth/v2/{vendorId}/authorize": {
+      "get": {
+        "summary": "Authorize for vendor",
+        "description": "",
+        "operationId": "authorizeVendor",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/oauth/v2/{vendorId}/addDevices": {
+      "get": {
+        "summary": "Adds all vendor devices for user",
+        "description": "",
+        "operationId": "addDevices",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get user",
+        "description": "",
+        "operationId": "getUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/users/{userId}/devices": {
+      "get": {
+        "summary": "Get all devices for user",
+        "description": "",
+        "operationId": "getDevices",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/users/{userId}/removeDevices": {
+      "delete": {
+        "summary": "Removes all devices for user",
+        "description": "",
+        "operationId": "removeUserDevices",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/users/{userId}/device/{deviceId}": {
+      "put": {
+        "summary": "Set device name",
+        "description": "",
+        "operationId": "setDeviceName",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "set name ",
+            "schema": {
+              "$ref": "#/definitions/DeviceName"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get device",
+        "description": "",
+        "operationId": "getDevice",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    },
+    "/device/thermostat/{deviceId}/fan": {
+      "put": {
+        "summary": "Set device fan",
+        "description": "",
+        "operationId": "setFan",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "fan ",
+            "schema": {
+              "$ref": "#/definitions/Fan"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get device fan",
+        "description": "",
+        "operationId": "getFan",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "header",
+            "type": "string",
+            "description": "User ID",
+            "required": true
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string",
+            "description": "Valid access token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized user"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Vendor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "authorizeUrl": {
+          "type": "string"
+        },
+        "isConnected": {
+          "type": "boolean"
+        }
+      },
+      "xml": {
+        "name": "Vendor"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "postalcode": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "DeviceName": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Fan": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
